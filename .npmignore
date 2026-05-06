@@ -1,0 +1,59 @@
+# Source files - only ship dist
+src/
+test/
+tests/
+__tests__/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# Config
+.gitignore
+.eslintrc*
+.prettierrc*
+.prettierignore
+.editorconfig
+tsconfig*.json
+vitest.config.*
+jest.config.*
+webpack.config.*
+rollup.config.*
+vite.config.*
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+circle.yml
+Jenkinsfile
+
+# Docs
+*.md
+!README.md
+docs/
+examples/
+benchmark/
+bench.js
+load-test.js
+spawn.js
+
+# Assets not needed in package
+logo.svg
+assets/
+.vscode/
+.idea/
+
+# Dev files
+.env*
+*.log
+npm-debug.log*
+
+# Build tools
+Makefile
+gulpfile.js
+Gruntfile.js
+
+# Misc
+.DS_Store
+Thumbs.db

@@ -1,0 +1,35 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bunnyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFB26B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF8C42;stop-opacity:1" />
+    </linearGradient>
+    <filter id="soft">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
+  </defs>
+  
+  <!-- Bunny ears -->
+  <ellipse cx="180" cy="140" rx="35" ry="90" fill="url(#bunnyGrad)" transform="rotate(-15 180 140)"/>
+  <ellipse cx="332" cy="140" rx="35" ry="90" fill="url(#bunnyGrad)" transform="rotate(15 332 140)"/>
+  <ellipse cx="180" cy="150" rx="18" ry="60" fill="#FFF" opacity="0.6" transform="rotate(-15 180 150)"/>
+  <ellipse cx="332" cy="150" rx="18" ry="60" fill="#FFF" opacity="0.6" transform="rotate(15 332 150)"/>
+  
+  <!-- Head -->
+  <circle cx="256" cy="270" r="130" fill="url(#bunnyGrad)"/>
+  
+  <!-- Face -->
+  <circle cx="220" cy="250" r="12" fill="#2D2D2D"/>
+  <circle cx="292" cy="250" r="12" fill="#2D2D2D"/>
+  <circle cx="224" cy="246" r="4" fill="#FFF"/>
+  <circle cx="296" cy="246" r="4" fill="#FFF"/>
+  
+  <!-- Nose -->
+  <path d="M256 280 L246 295 L266 295 Z" fill="#FF6B6B"/>
+  
+  <!-- Smile -->
+  <path d="M230 310 Q256 330 282 310" stroke="#2D2D2D" stroke-width="6" stroke-linecap="round" fill="none"/>
+  
+  <!-- WebSocket wave hint -->
+  <path d="M160 380 Q200 360 240 380 T320 380 T400 380" stroke="#FFF" stroke-width="8" stroke-linecap="round" opacity="0.4" fill="none"/>
+</svg>
