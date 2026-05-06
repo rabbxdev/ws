@@ -37,5 +37,41 @@
   "engines": {
     "node": ">=18",
     "bun": ">=1.0.0"
-  }
+  },
+  "repository":{
+    "type":"git",
+    "url":"https://github.com/rabbxdev/ws.git"
+},
+"homepage":"https://github.com/rabbxdev/ws.git",
+"author":"rabbx team",
+  "keywords": [
+    "websocket",
+    "ws",
+    "rfc6455",
+    "real-time",
+    "zero-dependency",
+    "zero-dep",
+    "bun",
+    "deno",
+    "cloudflare-workers",
+    "node",
+    "isomorphic",
+    "universal",
+    "web-socket",
+    "web-standard",
+    "eventtarget",
+    "client",
+    "server",
+    "wss",
+    "websockets",
+    "chat",
+    "streaming",
+    "bidirectional",
+    "fast",
+    "lightweight",
+    "small",
+    "edge",
+    "serverless"
+  ]
+
 }

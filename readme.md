@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@rabbx/ws"><img src="https://img.shields.io/npm/v/@rabbx/ws?color=FF8C42" alt="npm"></a>
+  <a href="https://www.npmjs.com/package/@rabbxdev/ws"><img src="https://img.shields.io/npm/v/@rabbxdev/ws?color=FF8C42" alt="npm"></a>
   <a href="https://github.com/rabbx/ws"><img src="https://img.shields.io/github/stars/rabbx/ws?style=social" alt="stars"></a>
   <img src="https://img.shields.io/badge/zero-deps-FF8C42" alt="zero deps">
   <img src="https://img.shields.io/badge/runtimes-node%20%7C%20bun%20%7C%20deno%20%7C%20workers-FF8C42" alt="runtimes">
@@ -189,10 +189,10 @@ MIT
 `@rabbx/ws` is MIT licensed and free forever. If it saves you server costs or dev time, consider sponsoring.
 
 <p align="center">
-  <a href="https://github.com/sponsors/rabbx">
+  <a href="https://github.com/sponsors/rabbxdev">
     <img src="https://img.shields.io/badge/Sponsor-GitHub-FF8C42?style=for-the-badge&logo=githubsponsors" alt="GitHub Sponsors">
   </a>
-  <a href="https://ko-fi.com/rabbx">
+  <a href="https://ko-fi.com/rabbxdev">
     <img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-Ko--fi-FF8C42?style=for-the-badge&logo=kofi" alt="Ko-fi">
   </a>
 </p>

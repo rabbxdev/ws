@@ -51,6 +51,8 @@ Desktop.ini
 # Bun
 .bun
 bun.lockb
+bun.lock
+package.lock.json
 
 # Temp
 tmp/
