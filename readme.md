@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@rabbxdev/ws"><img src="https://img.shields.io/npm/v/@rabbxdev/ws?color=FF8C42" alt="npm"></a>
-  <a href="https://github.com/rabbx/ws"><img src="https://img.shields.io/github/stars/rabbx/ws?style=social" alt="stars"></a>
+  <a href="https://github.com/rabbxdev/ws"><img src="https://img.shields.io/github/stars/rabbxdev/ws?style=social" alt="stars"></a>
   <img src="https://img.shields.io/badge/zero-deps-FF8C42" alt="zero deps">
   <img src="https://img.shields.io/badge/runtimes-node%20%7C%20bun%20%7C%20deno%20%7C%20workers-FF8C42" alt="runtimes">
 </p>
