@@ -63,7 +63,7 @@ ws.addEventListener('close', (e) => {
 ```ts
 import { createBunServer } from '@rabbx/ws/server';
 
-const { config, server: wss } = createBunServer({ path: '/ws' });
+const { config, server: wss } = createBunServer({ path: '/ws',maxPayload:60*1024 });
 
 Bun.serve({
   port: 3000,
@@ -143,7 +143,9 @@ Client class. Identical to browser WebSocket.
 
 *Options:*
 - `path: string` - WebSocket endpoint, default `/`
-- `verifyClient: (info, cb) => void` - Node only, auth hook
+- `verifyClient: (info, cb) => void` - Node only, auth hook.
+- `maxPayload` - helps mitigate Dos,memory leaks in workers.
+- maxHeaderSize - stops reDos attacks,default 8kb on upgrade.
 
 *Events:* `connection`  
 *Props:* `clients: Set<RabbitSocket>`  

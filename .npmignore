@@ -7,7 +7,9 @@ __tests__/
 *.test.ts
 *.spec.js
 *.spec.ts
-
+examples/
+bun.lock
+bun.lockb
 # Config
 .gitignore
 .eslintrc*
@@ -57,3 +59,6 @@ Gruntfile.js
 # Misc
 .DS_Store
 Thumbs.db
+types/
+scripts
+logo.svg

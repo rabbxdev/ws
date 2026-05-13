@@ -1,78 +1,132 @@
-/**
- * @rabbx/ws/server - Server types
- */
-
-import type { Server } from 'node:http';
-import type { IncomingMessage } from 'node:http';
-
-export interface ServerOptions {
-  /** Path to accept WebSocket connections */
+// index.d.ts
+export interface WebSocketServerOptions {
   path?: string;
-  /** Verify client before upgrade */
   verifyClient?: (
-    info: { origin: string; req: IncomingMessage; secure: boolean },
-    callback: (res: boolean, code?: number, message?: string) => void
+    info: { origin: string; req: any; secure: boolean },
+    cb: (ok: boolean, code?: number, message?: string) => void
   ) => void;
-  /** CORS config */
-  cors?: {
-    origin?: string | string[] | boolean;
-  };
+  maxPayload?: number; // default 64 * 1024
+  maxHeaderSize?: number; // default 8 * 1024
+  backpressureLimit?: number; // default 1 * 1024 * 1024, Node only
 }
 
-export interface ConnectionEvent extends CustomEvent {
-  detail: {
-    socket: RabbitSocket;
-    req: IncomingMessage | Request;
-  };
+export interface MessageEvent extends Event {
+  readonly data: string | Buffer | ArrayBuffer;
 }
 
-export interface WebSocketServerEventMap {
-  connection: ConnectionEvent;
-  error: ErrorEvent;
+export interface CloseEvent extends Event {
+  readonly code: number;
+  readonly reason: string;
+  readonly wasClean: boolean;
+}
+
+export interface ErrorEvent extends Event {
+  readonly error: any;
+  readonly message: string;
+}
+
+export type WebSocketEventMap = {
+  open: Event;
+  message: MessageEvent;
   close: CloseEvent;
-}
+  error: ErrorEvent;
+};
 
-export declare class RabbitSocket extends EventTarget {
+export class RabbitSocket extends EventTarget {
   readonly readyState: 0 | 1 | 2 | 3;
   readonly url: string;
+  readonly bufferedAmount: number;
 
-  send(data: string | ArrayBufferLike | ArrayBufferView): void;
+  constructor(
+    ws: any,
+    req: any,
+    server: RabbitWSServer,
+    runtime: 'node' | 'bun' | 'deno' | 'worker',
+    maxPayload?: number,
+    backpressureLimit?: number
+  );
+
+  send(data: string | Buffer | ArrayBuffer | Uint8Array): void;
   close(code?: number, reason?: string): void;
 
-  addEventListener(type: 'message', listener: (event: MessageEvent) => void): void;
-  addEventListener(type: 'close', listener: (event: CloseEvent) => void): void;
-  addEventListener(type: 'error', listener: (event: ErrorEvent) => void): void;
-  addEventListener(type: string, listener: EventListener): void;
-}
-
-export declare class WebSocketServer extends EventTarget {
-  readonly clients: Set<RabbitSocket>;
-
-  constructor(opts?: ServerOptions);
-
-  handleUpgrade(req: IncomingMessage, socket: any, head: Buffer): void;
-  handleRequest(req: Request): Response | Promise<Response>;
-  handleDeno(req: Request): Response;
-  attachBun(server: any): void;
-
-  close(callback?: () => void): void;
-
-  addEventListener<K extends keyof WebSocketServerEventMap>(
+  addEventListener<K extends keyof WebSocketEventMap>(
     type: K,
-    listener: (this: WebSocketServer, ev: WebSocketServerEventMap[K]) => any
+    listener: (ev: WebSocketEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions
   ): void;
-  addEventListener(type: string, listener: EventListener): void;
+
+  removeEventListener<K extends keyof WebSocketEventMap>(
+    type: K,
+    listener: (ev: WebSocketEventMap[K]) => void,
+    options?: boolean | EventListenerOptions
+  ): void;
+
+  // Internal methods, not for public use
+  _onMessage(data: any): void;
+  _onClose(code?: number, reason?: string): void;
+  _onError(error: any): void;
+  _parseFrame(buf: Buffer): Buffer;
 }
 
-/**
- * Create WebSocket server instance
- *
- * @param httpServer - Node http.Server, Bun.serve instance, or null for Workers
- * @param opts - Server options
- */
-export declare function createServer(
-  httpServer: Server | any | null,
-  opts?: ServerOptions
-): WebSocketServer;
+export type ServerEventMap = {
+  connection: CustomEvent<{ socket: RabbitSocket; req: any }>;
+};
+
+export class RabbitWSServer extends EventTarget {
+  constructor(opts?: WebSocketServerOptions);
+
+  get clients(): Set<RabbitSocket>;
+
+  // Bun
+  bunConfig(): {
+    config: {
+      websocket: {
+        maxPayloadLength: number;
+        open(ws: any): void;
+        message(ws: any, msg: any): void;
+        close(ws: any, code: number, reason: string): void;
+      };
+      fetch(req: Request, serverInstance: any): Response | undefined;
+    };
+    server: RabbitWSServer;
+  } | null;
+
+  // Deno
+  handleDeno(req: Request): Response;
+
+  // Cloudflare Workers
+  handleRequest(req: Request): Promise<Response>;
+
+  // Node
+  handleNodeUpgrade(req: any, socket: any, head: Buffer): void;
+
+  close(cb?: () => void): void;
+
+  addEventListener<K extends keyof ServerEventMap>(
+    type: K,
+    listener: (ev: ServerEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+
+  removeEventListener<K extends keyof ServerEventMap>(
+    type: K,
+    listener: (ev: ServerEventMap[K]) => void,
+    options?: boolean | EventListenerOptions
+  ): void;
+}
+
+export type WebSocketServer = RabbitWSServer;
+
+export function createServer(
+  httpServer?: any,
+  opts?: WebSocketServerOptions
+): RabbitWSServer;
+
+export function createBunServer(
+  opts?: WebSocketServerOptions
+): {
+  config: any;
+  server: RabbitWSServer;
+};
 
 export default createServer;

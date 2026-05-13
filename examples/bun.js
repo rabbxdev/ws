@@ -1,7 +1,7 @@
 import { createBunServer } from '@rabbx/ws/server';
 
 // Fix: destructure both config and server
-const { config, server: wss } = createBunServer({ path: '/ws' });
+const { config, server: wss } = createBunServer({ path: '/ws',maxPayload:64*1024 });
 
 Bun.serve({
   port: 3000,
@@ -17,7 +17,7 @@ wss.addEventListener('connection', ({ detail: { socket } }) => {
   socket.send('Server: ready');
 
   socket.addEventListener('message', (e) => {
-    console.log('Got data:', e.data); // This fires now
+    //console.log('Got data:', e.data); // This fires now
     socket.send(`Echo: ${e.data}`);
   });
 

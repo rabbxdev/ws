@@ -14,8 +14,8 @@ await mkdir('dist/types', { recursive: true });
 const result = await Bun.build({
   entrypoints: ['./src/index.js', './src/server.js'],
   outdir: './dist',
-  target: 'node',
-  format: 'esm',
+  target: 'browser',
+  format: 'esm', 
   minify: {
     whitespace: true,
     syntax: true,
@@ -44,30 +44,6 @@ for (const file of ['index.js', 'server.js']) {
   console.log(`📦 ${file}: ${origKB.toFixed(2)}KB → ${minKB.toFixed(2)}KB (-${saved}%)`);
 }
 
-// Generate package.json
-const pkg = await Bun.file('./package.json').json();
-const distPkg = {
-  name: pkg.name,
-  version: pkg.version,
-  description: pkg.description,
-  type: 'module',
-  main: './index.js',
-  module: './index.js',
-  types: './types/index.d.ts',
-  exports: {
-    ".": {
-      "types": "./types/index.d.ts",
-      "import": "./index.js"
-    },
-    "./server": {
-      "types": "./types/server.d.ts",
-      "import": "./server.js"
-    }
-  },
-  sideEffects: false
-};
-
-await Bun.write('dist/package.json', JSON.stringify(distPkg, null, 2));
 
 const time = ((performance.now() - start) / 1000).toFixed(2);
 console.log(`\n✅ Done in ${time}s`);
